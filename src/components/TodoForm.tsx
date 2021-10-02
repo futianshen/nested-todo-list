@@ -1,5 +1,4 @@
 import React from "react"
-import styled from "styled-components"
 // logic 複用
 import { useForm } from "react-hook-form" // react hook
 
@@ -8,30 +7,31 @@ import { FC } from "react" // from library type definition
 import { FormValues, NestedList } from "../types/todo"
 
 // UI Component 複用
-import { Button, ButtonGroup } from "@geist-ui/react" // from any library
+import { ButtonGroup, Button, useToasts } from "@geist-ui/react" // any ui library
 import { Todo, TodoList } from "../components/todo"
 
 // 樣式 複用
-import { ContainerMixin, StyledAddButton } from "../style" // from any css in js solution
+import styled from "styled-components" // css in js
+import { ContainerMixin, StyledAddButton } from "../style"
 const StyledSection = styled.section`
   ${ContainerMixin}
 `
 
 const initialList: NestedList = [
   {
-    value: "todo group 1",
-    isDone: false,
+    value: "todo group 2",
+    isDone: true,
   },
   {
-    value: "todo group 2",
+    value: "todo group 1",
     isDone: false,
     list: [
       {
-        value: "group todo 1",
+        value: "group todo 2",
         isDone: false,
       },
       {
-        value: "group todo 2",
+        value: "group todo 1",
         isDone: true,
       },
     ],
@@ -39,19 +39,25 @@ const initialList: NestedList = [
 ]
 
 const TodoForm: FC = function () {
-  const form = useForm<FormValues>({
-    defaultValues: {
-      nestedList: initialList,
-    },
-  })
-  const { control, register, getValues, setValue, handleSubmit } = form
+  const { control, register, getValues, setValue, handleSubmit } =
+    useForm<FormValues>({
+      defaultValues: {
+        nestedList: initialList,
+      },
+    })
+  const [, setToast] = useToasts()
+
   const handleSave = handleSubmit((value) => {
     localStorage.setItem("todoList", JSON.stringify(value.nestedList))
-    alert("success")
+    setToast({ text: "Saved", type: "success" })
   })
   const handleLoad = () => {
     setValue("nestedList", JSON.parse(localStorage.getItem("todoList") || ""))
-    alert("success")
+    setToast({ text: "Loaded", type: "secondary" })
+  }
+  const handleClear = () => {
+    setValue("nestedList", [])
+    setToast({ text: "Clear" })
   }
 
   return (
@@ -59,7 +65,7 @@ const TodoForm: FC = function () {
       <ButtonGroup className="d-flex gap-1 mx-0">
         <Button onClick={handleSave}>↑ Save</Button>
         <Button onClick={handleLoad}>↓ Load</Button>
-        <Button onClick={() => setValue("nestedList", [])}>X Clear</Button>
+        <Button onClick={handleClear}>X Clear</Button>
       </ButtonGroup>
 
       <TodoList
@@ -68,12 +74,12 @@ const TodoForm: FC = function () {
         renderAddButton={(prepend) => (
           <ButtonGroup className="d-flex justify-center gap-1">
             <Button
-              onClick={() =>
+              onClick={() => {
                 prepend({
                   value: "",
                   isDone: false,
                 })
-              }
+              }}
             >
               + Todo
             </Button>
