@@ -42,7 +42,8 @@ const TodoForm: FC = function () {
   const { control, register, getValues, setValue, handleSubmit } =
     useForm<FormValues>({
       defaultValues: {
-        nestedList: initialList,
+        nestedList:
+          JSON.parse(localStorage.getItem("todoList") || "") || initialList,
       },
     })
   const [, setToast] = useToasts()
