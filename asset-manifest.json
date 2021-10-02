@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/nested-todo-list/static/css/main.e7a81f16.chunk.css",
-    "main.js": "/nested-todo-list/static/js/main.80220048.chunk.js",
-    "main.js.map": "/nested-todo-list/static/js/main.80220048.chunk.js.map",
+    "main.js": "/nested-todo-list/static/js/main.39f64784.chunk.js",
+    "main.js.map": "/nested-todo-list/static/js/main.39f64784.chunk.js.map",
     "runtime-main.js": "/nested-todo-list/static/js/runtime-main.2349b8b4.js",
     "runtime-main.js.map": "/nested-todo-list/static/js/runtime-main.2349b8b4.js.map",
     "static/js/2.384b4bf2.chunk.js": "/nested-todo-list/static/js/2.384b4bf2.chunk.js",
@@ -15,6 +15,6 @@
     "static/js/runtime-main.2349b8b4.js",
     "static/js/2.384b4bf2.chunk.js",
     "static/css/main.e7a81f16.chunk.css",
-    "static/js/main.80220048.chunk.js"
+    "static/js/main.39f64784.chunk.js"
   ]
 }
