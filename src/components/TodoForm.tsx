@@ -1,4 +1,3 @@
-import React from "react"
 // logic 複用
 import { useForm } from "react-hook-form" // react hook
 
@@ -42,8 +41,9 @@ const TodoForm: FC = function () {
   const { control, register, getValues, setValue, handleSubmit } =
     useForm<FormValues>({
       defaultValues: {
-        nestedList:
-          JSON.parse(localStorage.getItem("todoList") || "") || initialList,
+        nestedList: localStorage.getItem("todoList")
+          ? JSON.parse(localStorage.getItem("todoList") as string)
+          : initialList,
       },
     })
   const [, setToast] = useToasts()
@@ -53,7 +53,10 @@ const TodoForm: FC = function () {
     setToast({ text: "Saved", type: "success" })
   })
   const handleLoad = () => {
-    setValue("nestedList", JSON.parse(localStorage.getItem("todoList") || ""))
+    setValue(
+      "nestedList",
+      JSON.parse(localStorage.getItem("todoList") as string)
+    )
     setToast({ text: "Loaded", type: "secondary" })
   }
   const handleClear = () => {
